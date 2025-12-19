@@ -23,7 +23,7 @@ test("Регистрация в блоге realworld", async ({ page }) => {
   await expect(page.getByRole("navigation")).toContainText(name);
 });
 
-test.only("Пользователь меняет имя в профиле", async ({ page }) => {
+test("Пользователь меняет имя в профиле", async ({ page }) => {
   // todo Дописать тест на изменение имени в профиле
   getRegistration(page, name, password, email, url);
   await expect(page.getByRole("navigation")).toContainText(name);

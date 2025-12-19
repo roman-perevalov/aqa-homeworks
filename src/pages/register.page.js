@@ -1,22 +1,23 @@
 export class RegisterPage {
   constructor(page) {
     this.page = page;
-    this.signUpButton = page.getByRole("button", { name: "Sign up" });
-    this.email = page.getByRole("textbox", { name: "Email" });
+
+    this.signupButton = page.getByRole("button", { name: "Sign up" });
+    this.emailInput = page.getByRole("textbox", { name: "Email" });
     this.nameInput = page.getByRole("textbox", { name: "Your Name" });
-    this.password = page.getByRole("textbox", { name: "Password" });
-    // Техническое описание страницы
-    this.signupLink = page
-      .getByRole("link", { name: "Sign up" })
-      .describe("Кнопка «Sign up»");
+    this.passwordInput = page.getByRole("textbox", { name: "Password" });
   }
 
-  // Бизнесовые действия со страницей
   async register(name, email, password) {
-    await this.email.click().fill(name);
-    await this.nameInput.click().fill(email);
-    await this.password.click().fill(password);
+    await this.nameInput.click();
+    await this.nameInput.fill(name);
 
-    this.signupLink.click();
+    await this.emailInput.click();
+    await this.emailInput.fill(email);
+
+    await this.passwordInput.click();
+    await this.passwordInput.fill(password);
+
+    await this.signupButton.click();
   }
 }

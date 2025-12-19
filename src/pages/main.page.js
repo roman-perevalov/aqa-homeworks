@@ -1,18 +1,22 @@
+import { test } from "@playwright/test";
+
 export class MainPage {
   constructor(page) {
     this.page = page;
-    // Техническое описание страницы
     this.signupLink = page
       .getByRole("link", { name: "Sign up" })
-      .describe("Кнопка «Sign up»");
+      .describe("Кнопка//cсылка зарегистрироваться");
   }
 
-  // Бизнесовые действия со страницей
-  async goToRegister() {
-    this.signupLink.click();
+  async gotoRegister() {
+    return test.step("Перейти на страницу Регистрации", async (step) => {
+      this.signupLink.click();
+    });
   }
 
-  async openUrL(url) {
-    this.page.goto(url);
+  async open(url) {
+    return test.step(`Перейти на страницу ${url} `, async (step) => {
+      await this.page.goto(url);
+    });
   }
 }

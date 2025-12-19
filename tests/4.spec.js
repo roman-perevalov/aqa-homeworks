@@ -26,7 +26,7 @@ test("Регистрация в блоге realworld", async ({ page }) => {
   await expect(page.getByRole("navigation")).toContainText(user.name);
 });
 
-test.only("Пользователь меняет имя в профиле", async ({ page }) => {
+test("Пользователь меняет имя в профиле", async ({ page }) => {
   const { name, email, password } = user;
 
   // todo Дописать тест на изменение имени в профиле

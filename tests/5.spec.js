@@ -1,38 +1,28 @@
 import { test, expect } from "@playwright/test";
 import { faker } from "@faker-js/faker";
+import { HomePage } from "../src/pages/home.page";
 import { MainPage } from "../src/pages/main.page";
 import { RegisterPage } from "../src/pages/register.page";
 
 const user = {
   email: faker.internet.email({ provider: "test.test" }),
-  name: faker.person.fullName(),
+  name: faker.person.fullName(), // 'Allen Brown'
   password: faker.internet.password({ length: 10 }),
 };
 
 const url = "https://realworld.qa.guru/";
 
-const getRegistration = async (page, name, password, email, url) => {
+test("Регистрация в блоге realworld.qa.guru", async ({ page }) => {
+  const { email, name, password } = user;
+
+  const homePage = new HomePage(page);
   const mainPage = new MainPage(page);
-  await mainPage.openUrL(url);
-  await mainPage.goToRegister();
+  const registrationPage = new RegisterPage(page);
 
-  await page.getByRole("textbox", { name: "Your Name" }).click();
-  await page.getByRole("textbox", { name: "Your Name" }).fill(name);
-  await page.getByRole("textbox", { name: "Email" }).click();
-  await page.getByRole("textbox", { name: "Email" }).fill(email);
-  await page.getByRole("textbox", { name: "Password" }).click();
-  await page.getByRole("textbox", { name: "Password" }).fill(password);
-  await page.getByRole("button", { name: "Sign up" }).click();
-};
+  await mainPage.open(url);
+  await mainPage.gotoRegister();
+  await registrationPage.register(name, email, password);
 
-test("Регистрация в блоге realworld", async ({ page }) => {
-  getRegistration(page, user.email, user.name, user.password, url);
-  await expect(page.getByRole("navigation")).toContainText(user.name);
-});
-
-test("Пользователь меняет имя в профиле", async ({ page }) => {
-  const { name, email, password } = user;
-
-  getRegistration(page, user.email, user.name, user.password, url);
-  await expect(page.getByRole("navigation")).toContainText(name);
+  await expect(homePage.getProfileNameLocator()).toContainText(user.name);
+  // await expect(homePage.getProfileNameLocator()).toContainText(user.name);
 });
