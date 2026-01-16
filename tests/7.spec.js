@@ -7,7 +7,7 @@ import { UserBuilder } from "../src/helpers/builders/index";
 
 const url = "https://realworld.qa.guru/";
 
-test.skip("Регистрация пользователя c помощью email. Page Object паттерны", async ({
+test("Регистрация пользователя c помощью email. Page Object паттерны", async ({
   page,
 }) => {
   await allure.tms("TMS-456", "Related TMS issue");
@@ -53,7 +53,7 @@ test("Фикстура параметризированная", async ({ createW
   await expect(user).toHaveProperty(user.name);
 });
 
-test.only("Фикстура параметризированная с дефолтным значением", async ({
+test("Фикстура параметризированная с дефолтным значением", async ({
   createWithRole,
 }) => {
   await allure.tms("TMS-456", "Related TMS issue");
