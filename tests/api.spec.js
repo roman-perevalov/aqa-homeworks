@@ -26,7 +26,7 @@ test.describe("Challenge", () => {
   //     })
   // });
 
-  test.only("Получить список челленджей", async ({ request }) => {
+  test("Получить список челленджей", async ({ request }) => {
     let response = await request.get(`${url}challenges`, {
       headers: {
         "X-CHALLENGER": token["x-challenger"],

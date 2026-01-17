@@ -11,6 +11,7 @@ export class MainPage {
     this.settingsButton = page.getByRole("link", { name: " Settings" });
     this.profilePicture = page.locator(".user-pic");
     this.newArticleButton = page.getByRole("link", { name: " New Article" });
+    this.globalFeedButton = page.getByRole("button", { name: "Global Feed" });
   }
 
   async gotoRegister() {
@@ -20,9 +21,7 @@ export class MainPage {
   }
 
   async goToLogin() {
-    // return test.step("Перейти на страницу Логина", async (step) => {
     await this.loginLink.click();
-    // });
   }
 
   async goToSettings() {
@@ -32,6 +31,10 @@ export class MainPage {
 
   async goToWriteNewArticle() {
     await this.newArticleButton.click();
+  }
+
+  async goToGlobalFeed() {
+    await this.globalFeedButton.click();
   }
 
   getProfilePicture() {

@@ -4,3 +4,4 @@ export * from "./register.page";
 export * from "./login.page";
 export * from "./settings.page";
 export * from "./article.page";
+export * from "./globalFeed.page";

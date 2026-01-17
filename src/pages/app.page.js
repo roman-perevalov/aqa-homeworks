@@ -5,6 +5,7 @@ import {
   LoginPage,
   SettingsPage,
   ArticlePage,
+  GlobalFeed,
 } from "./index";
 
 export class App {
@@ -16,5 +17,6 @@ export class App {
     this.login = new LoginPage(page);
     this.settings = new SettingsPage(page);
     this.article = new ArticlePage(page);
+    this.globalFeed = new GlobalFeed(page);
   }
 }
