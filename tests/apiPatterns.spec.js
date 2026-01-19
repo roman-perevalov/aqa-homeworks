@@ -4,7 +4,7 @@ import { Api } from "../src/services/api.facede";
 const url = "https://apichallenges.eviltester.com/";
 let token;
 
-test.describe.only("Challenge with service", () => {
+test.describe("Challenge with service", () => {
   test.beforeAll(async ({ request }, testinfo) => {
     let api = new Api(request);
     let response = await api.challenger.post(testinfo);
