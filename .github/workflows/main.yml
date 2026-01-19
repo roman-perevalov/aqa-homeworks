@@ -21,3 +21,6 @@ jobs:
         run: npx playwright install --with-deps
       - name: Запусков тестов
         run: npm t
+        # todo унести в package.json
+      - name: Сгенерировать Allure 3 отчет в один файл 
+        run: npx allure awesome ./allure-results --single-file
