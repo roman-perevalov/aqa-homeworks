@@ -24,3 +24,11 @@ jobs:
         # todo унести в package.json
       - name: Сгенерировать Allure 3 отчет в один файл 
         run: npx allure awesome ./allure-results --single-file
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v6.0.0
+        with:
+          name: Allure single file
+          path: |
+              allure-report/index.html
+              allure-results
+              playwright-report
