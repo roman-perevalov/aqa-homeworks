@@ -18,6 +18,6 @@ jobs:
       - name: Установка npm-пакеты из package.json
         run: npm ci
       - name: Установка браузеров
-        run: npm playwright install --with-deps
+        run: npx playwright install --with-deps
       - name: Запусков тестов
         run: npx t
