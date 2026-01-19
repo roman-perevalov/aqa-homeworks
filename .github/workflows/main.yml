@@ -20,4 +20,4 @@ jobs:
       - name: Установка браузеров
         run: npx playwright install --with-deps
       - name: Запусков тестов
-        run: npx t
+        run: npm t
