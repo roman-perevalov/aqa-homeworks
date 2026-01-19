@@ -5,7 +5,7 @@ import { faker } from "@faker-js/faker";
 
 const url = "https://realworld.qa.guru/";
 
-test.describe.only("Домашнее задание по уроку Page Object Pattern", () => {
+test.describe("Домашнее задание по уроку Page Object Pattern", () => {
   test("Изменить аватар пользователя", async ({ page }) => {
     const user = new UserBuilder()
       .withEmail()
