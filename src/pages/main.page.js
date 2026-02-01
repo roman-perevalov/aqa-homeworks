@@ -12,6 +12,9 @@ export class MainPage {
     this.profilePicture = page.locator(".user-pic");
     this.newArticleButton = page.getByRole("link", { name: " New Article" });
     this.globalFeedButton = page.getByRole("button", { name: "Global Feed" });
+    this.homeNavbarButton = page
+      .getByRole("navigation")
+      .getByRole("link", { name: "conduit" });
   }
 
   async gotoRegister() {
@@ -35,6 +38,10 @@ export class MainPage {
 
   async goToGlobalFeed() {
     await this.globalFeedButton.click();
+  }
+
+  async goHomeNav() {
+    await this.homeNavbarButton.click();
   }
 
   getProfilePicture() {

@@ -6,19 +6,25 @@ import { faker } from "@faker-js/faker";
 const url = "https://realworld.qa.guru/";
 
 test.describe("Домашнее задание по уроку Page Object Pattern", () => {
-  test("Изменить аватар пользователя", async ({ page }) => {
+  test.beforeEach(async ({ page }) => {
+    const app = new App(page);
     const user = new UserBuilder()
       .withEmail()
       .withName()
       .withPassword()
       .build();
     const { email, name, password } = user;
-    const app = new App(page);
-    const newPicture = faker.image.url(); // Пример: 'https://picsum.photos/seed/KY0u8X/2290/2630';
 
     await app.main.open(url);
     await app.main.gotoRegister();
     await app.register.register(name, email, password);
+  });
+
+  test("№ 1. Изменить аватар пользователя", async ({ page }) => {
+    const app = new App(page);
+
+    const newPicture = faker.image.url(); // Пример: 'https://picsum.photos/seed/KY0u8X/2290/2630';
+
     await app.main.goToSettings();
 
     await app.settings.updateProfilePicture(newPicture);
@@ -29,19 +35,9 @@ test.describe("Домашнее задание по уроку Page Object Patte
     );
   });
 
-  test("Изменить имя пользователя", async ({ page }) => {
-    const user = new UserBuilder()
-      .withEmail()
-      .withName()
-      .withPassword()
-      .build();
-    const { email, name, password } = user;
+  test("№ 2. Изменить имя пользователя", async ({ page }) => {
     const app = new App(page);
     const newName = faker.person.fullName();
-
-    await app.main.open(url);
-    await app.main.gotoRegister();
-    await app.register.register(name, email, password);
 
     await app.main.goToSettings();
     await app.settings.updateName(newName);
@@ -49,73 +45,57 @@ test.describe("Домашнее задание по уроку Page Object Patte
     await expect(app.main.getProfileName()).toContainText(newName);
   });
 
-  test("Создать новую статью", async ({ page }) => {
-    const user = new UserBuilder()
-      .withEmail()
-      .withName()
-      .withPassword()
-      .build();
-    const { email, name, password } = user;
+  test("№ 3. Создать новую статью", async ({ page }) => {
     const app = new App(page);
 
     const title = faker.music.artist(); // Заголовок статьи
     const description = faker.music.genre(); // Описание статьи
     const mainArticle = faker.lorem.paragraphs(3); // Основное содержание статьи
-    const tags = faker.music.songName();
+    const tags = faker.music.songName(); // Тэги
 
-    await app.main.open(url);
-    await app.main.gotoRegister();
-    await app.register.register(name, email, password);
     await app.main.goToWriteNewArticle();
 
     await app.article.writeArticle(title, description, mainArticle, tags);
 
-    await expect(page.getByRole("heading")).toContainText(title);
-    await expect(page.getByRole("paragraph")).toContainText(mainArticle);
+    await expect(app.article.getHeadingLocator()).toContainText(title);
+    await expect(app.article.getParagraphLocator()).toContainText(mainArticle);
   });
 
-  test("Открыть статью и написать комментарий", async ({ page }) => {
-    const user = new UserBuilder()
-      .withEmail()
-      .withName()
-      .withPassword()
-      .build();
-    const { email, name, password } = user;
+  test("№ 4. Открыть статью и написать комментарий", async ({ page }) => {
     const app = new App(page);
     const comment = faker.food.description();
 
-    await app.main.open(url);
-    await app.main.gotoRegister();
-    await app.register.register(name, email, password);
+    const title = faker.music.artist(); // Заголовок статьи
+    const description = faker.music.genre(); // Описание статьи
+    const mainArticle = faker.lorem.paragraphs(3); // Основное содержание статьи
+    const tags = faker.music.songName(); // Тэги
 
-    await app.main.goToGlobalFeed();
+    await app.main.goToWriteNewArticle();
 
-    await app.globalFeed.goToArticle(0);
+    await app.article.writeArticle(title, description, mainArticle, tags);
 
     await app.globalFeed.writeComment(comment);
 
-    await expect(page.getByRole("main")).toContainText(comment);
+    await expect(app.globalFeed.getWrittedCommentArea()).toContainText(comment);
   });
 
-  test("Поставить лайк статье", async ({ page }) => {
-    const user = new UserBuilder()
-      .withEmail()
-      .withName()
-      .withPassword()
-      .build();
-    const { email, name, password } = user;
+  test("№ 5. Поставить лайк статье", async ({ page }) => {
     const app = new App(page);
 
-    await app.main.open(url);
-    await app.main.gotoRegister();
-    await app.register.register(name, email, password);
+    const title = faker.music.artist(); // Заголовок статьи
+    const description = faker.music.genre(); // Описание статьи
+    const mainArticle = faker.lorem.paragraphs(3); // Основное содержание статьи
+    const tags = faker.music.songName(); // Тэги
 
+    await app.main.goToWriteNewArticle();
+
+    await app.article.writeArticle(title, description, mainArticle, tags);
+
+    await app.main.open(url);
     await app.main.goToGlobalFeed();
 
-    await app.globalFeed.addLike(2);
+    await app.globalFeed.addLike(0);
 
-    await expect(page.getByRole("main")).toContainText("( 1 )");
+    await expect(app.globalFeed.getLikeCount(0)).toContainText("( 1 )");
   });
-
-  // test("Удалить статью из избранного", async ({ page }) => {});
 });

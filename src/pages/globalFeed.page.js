@@ -7,7 +7,10 @@ export class GlobalFeed {
     });
     this.postCommentButton = page.getByRole("button", { name: "Post Comment" });
     this.tagPill = page.locator(".tag-pill.tag-default");
-    this.like = page.locator("button:has(i.ion-heart)");
+    // this.like = page.locator("button:has(i.ion-heart)");
+    this.like = page.locator(".ion-heart");
+    this.writtedCommentArea = page.getByRole("main");
+    this.likeButton = page.locator(".btn-outline-primary");
   }
 
   async goToArticle(index) {
@@ -15,6 +18,7 @@ export class GlobalFeed {
   }
 
   async addLike(index) {
+    await this.like.nth(index).waitFor({ state: "visible" });
     await this.like.nth(index).click();
   }
 
@@ -23,5 +27,13 @@ export class GlobalFeed {
     await this.commentArea.fill(comment);
 
     await this.postCommentButton.click();
+  }
+
+  getWrittedCommentArea() {
+    return this.writtedCommentArea;
+  }
+
+  getLikeCount(index) {
+    return this.likeButton.nth(index);
   }
 }

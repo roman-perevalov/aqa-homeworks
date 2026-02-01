@@ -10,6 +10,8 @@ export class ArticlePage {
     });
     this.tags = page.getByRole("textbox", { name: "Enter tags" });
     this.publishButton = page.getByRole("button", { name: "Publish Article" });
+    this.heading = page.getByRole("heading");
+    this.paragraph = page.getByRole("paragraph");
   }
 
   async writeArticle(title, description, mainArticle, tags) {
@@ -19,5 +21,13 @@ export class ArticlePage {
     await this.tags.fill(tags);
 
     await this.publishButton.click();
+  }
+
+  getHeadingLocator() {
+    return this.heading;
+  }
+
+  getParagraphLocator() {
+    return this.paragraph;
   }
 }
